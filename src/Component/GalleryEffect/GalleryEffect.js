@@ -47,6 +47,17 @@ const GalleryEffect = () => {
       });
     };
 
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "bottom bottom",
+      onEnter: () => {
+        document.body.style.overflow = "hidden";
+        setTimeout(() => {
+          document.body.style.overflow = "auto";
+        }, 1000);
+      },
+    });
+
     // Animate all four extra images
     animateExtraImage(topLeftRef);
     animateExtraImage(topRightRef);

@@ -1,63 +1,24 @@
 import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { setupSplitScrollAnimation } from "./splitScrollAnimation";
+import { Heading75 } from "../Headings/Heading75";
 
 const SplitScroll = () => {
   const headingRef = useRef(null);
   const pupilRefs = useRef([]);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const words = headingRef.current.children; // Get all words
-
-    gsap.fromTo(
-      words,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 80%",
-          toggleActions: "restart none none none",
-        },
-      }
-    );
-
-    // Mouse tracking for eyes
-    const handleMouseMove = (e) => {
-      pupilRefs.current.forEach((pupil) => {
-        if (!pupil) return;
-        const eye = pupil.parentElement;
-        const eyeRect = eye.getBoundingClientRect();
-        const eyeCenterX = eyeRect.left + eyeRect.width / 2;
-        const eyeCenterY = eyeRect.top + eyeRect.height / 2;
-
-        const deltaX = e.clientX - eyeCenterX;
-        const deltaY = e.clientY - eyeCenterY;
-        const angle = Math.atan2(deltaY, deltaX);
-        const distance = Math.min(eyeRect.width / 3, Math.sqrt(deltaX ** 2 + deltaY ** 2));
-
-        pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-      });
+    const cleanup = setupSplitScrollAnimation(headingRef, pupilRefs, containerRef);
+    return () => {
+      cleanup && cleanup();
     };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <section className="relative w-full">
       <div className="flex">
         {/* Left Side with Darker Gradient Background */}
-        <div
-          className="w-1/2 h-screen flex flex-col justify-center items-center px-10 sticky top-0 
-          bg-gradient-to-r from-black to-gray-800"
-        >
+        <div className="w-1/2 h-screen flex flex-col justify-center items-center px-10 sticky top-0 bg-[#000]">
           {/* Split Heading into Words */}
           <h1
             ref={headingRef}
@@ -80,22 +41,62 @@ const SplitScroll = () => {
           </div>
         </div>
 
-        {/* Right Side */}
-        <div className="w-1/2 ml-auto bg-[#f5f3ef]">
-          <div className="flex flex-col space-y-20 py-10">
-            {["herbs", "nature", "health", "plants"].map((item, index) => (
-              <div key={index} className="h-screen flex flex-col justify-center items-center">
-                <img
-                  src={`https://source.unsplash.com/400x400/?${item}`}
-                  className="w-48 h-48 rounded-full shadow-lg mb-6"
-                  alt={item}
-                />
-                <h2 className="text-4xl font-bold text-gray-800 mb-4">Title {index + 1}</h2>
-                <p className="text-lg text-gray-700 text-center max-w-md">
-                  This is a placeholder description for {item}.
-                </p>
-              </div>
-            ))}
+        <div className="w-1/2 ml-auto bg-[#eae8e5] flex flex-col p-[4.17em_2.08em] relative" ref={containerRef}>
+          <Heading75>A customized product selection</Heading75>
+          <p className="text-xsm text-gray-700 mt-5 w-[342px]">
+            Finally allows users to purchase from their local dispensary - but the value add doesn't end there.
+          </p>
+          <div className="relative w-full h-[450px]">
+            <img
+              className="absolute top-[9.5rem] left-[3.5rem] border-4 border-white w-[120px] h-[120px] rounded-full object-cover z-[99]"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2bc6_alejo-reinoso-XTy860zgUkc-unsplash%202.webp"
+              alt="Plant"
+            />
+            <img
+              className="absolute top-[60px] left-[100px] w-[180px] h-[180px] rounded-full object-cover border-4 border-white"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/66f4233fa82ba5e3369363b8_3-p-500.avif"
+              alt="Person"
+            />
+            <img
+              className="absolute top-[130px] right-[10px] w-[300px] h-[300px] rounded-full object-cover border-4 border-white"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/66f4233fa82ba5e3369363b8_3-p-500.avif"
+              alt="Jars"
+            />
+          </div>
+          <Heading75 className="mt-[50px]">
+            XShack is a trusted one-stop-shop for all cannabis-related activities for users and dispensaries alike.
+          </Heading75>
+          <p className="text-xsm text-gray-700 mt-5 w-[342px]">
+            From recreational to medical, we make it easy to access cannabis and find the high life you’re searching for.
+          </p>
+          <div className="w-full mt-[40px]">
+            <img 
+              className="w-[300px] rounded-t-[20px]" 
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/66f4e96b5d1ce3b83752600c_Rewards-p-500.avif" 
+            />
+          </div>
+          <Heading75 className="mt-[70px] w-[500px]">
+            We add value to the marijuana journey from the very first trip.
+          </Heading75>
+          <p className="text-xsm text-gray-700 mt-5 w-[342px]">
+            Whether you’re new to cannabis or an experienced user, our app offers a range of benefits for everyone: from personalized shopping and real-time navigation, to supply updates and loyalty programs.
+          </p>
+          <div className="relative w-full h-[450px]">
+            <img
+              className="absolute top-[-100px] right-[6rem] w-[120px] h-[120px] rounded-full object-cover"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2bc6_alejo-reinoso-XTy860zgUkc-unsplash%202.webp"
+              alt="Plant"
+            />
+            <img
+              className="absolute top-[-30px] right-[2rem] w-[140px] h-[140px] rounded-full object-cover"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/66f4233fa82ba5e3369363b8_3-p-500.avif"
+              alt="Person"
+            />
+            <img
+              className="absolute top-[160px] right-[180px] w-[250px] object-cover"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c26_Xshack%2520Phone-p-500.png"
+              alt="Jars"
+            />
           </div>
         </div>
       </div>
