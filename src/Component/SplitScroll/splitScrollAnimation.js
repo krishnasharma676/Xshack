@@ -67,6 +67,7 @@ export const setupSplitScrollAnimation = (headingRef, pupilRefs, containerRef) =
   };
 
   window.addEventListener("mousemove", handleMouseMove);
+  
 
   return () => {
     window.removeEventListener("mousemove", handleMouseMove);
