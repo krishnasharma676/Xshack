@@ -57,7 +57,7 @@ const SplitScroll = () => {
               alt="Person"
             />
             <img className="absolute top-[100px] md:top-[130px] right-[5px] md:right-[10px] w-[250px] md:w-[300px] h-[250px] md:h-[300px] rounded-full object-cover border-4 border-white"
-              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/66f4233fa82ba5e3369363b8_3-p-500.avif"
+              src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2bca_patrick-perkins-BnATLYwyyjo-unsplash%201.webp"
               alt="Jars"
             />
           </div>

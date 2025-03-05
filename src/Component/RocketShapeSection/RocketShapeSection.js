@@ -1,7 +1,6 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import FloatingImages from "./FloatingImages";
-import RocketSectionScrollEffect from "./RocketSectionScrollEffect";
 
 const RocketShapeSection = () => {
   const { scrollYProgress } = useScroll();
@@ -22,14 +21,17 @@ const RocketShapeSection = () => {
         </svg>
       </div>
 
-      {/* Main Content Section */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center text-white h-[400px] bg-black">
-        <h1 className="text-4xl font-bold">SHOP YOUR WAY.</h1>
-        <h2 className="text-3xl font-bold mt-2">GROW YOUR BUSINESS.</h2>
-        <p className="text-lg mt-2">MEET YOUR NEW CANNABIS WINGMAN.</p>
-        {/* <FloatingImages/> */}
-        <RocketSectionScrollEffect/>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center text-white">
+        <h1 className="text-1xl md:text-4xl lg:text-5xl font-extrabold text-orange-500 mt-2">SHOP YOUR WAY.</h1>
+        <h2 className="text-1xl md:text-4xl lg:text-5xl font-extrabold text-orange-500 mt-2">GROW YOUR BUSINESS.</h2>
+        <h2 className="text-1xl md:text-4xl lg:text-5xl font-extrabold text-orange-500 mt-2">MEET YOUR NEW CANNABIS WINGMAN.</h2>
+        <p className="text-sm md:text-sm lg:text-sm text-gray-400 mt-4 max-w-2xl">
+          We partner with the best local dispensaries to offer better, smarter access to cannabis.
+          And a lot more revenue for dispensaries.
+        </p>
+        <FloatingImages />
       </div>
+
     </div>
   );
 };
