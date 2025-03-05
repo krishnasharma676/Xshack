@@ -5,6 +5,7 @@ import SmokeEffectBanner from './Component/HeroSection/SmokeEffectBanner';
 import HowItWorks from './Component/HowItWorks/HowItWorks';
 import LandingHero from './Component/LandingHero/LandingHero';
 import Navbar from './Component/Navbar/Navbar'
+import { PickProduct } from './Component/PickProduct/PickProduct';
 import RocketShapeSection from './Component/RocketShapeSection/RocketShapeSection';
 import SignupForm from './Component/SignupForm/SignupForm';
 import SplitScroll from './Component/SplitScroll/SplitScroll';
@@ -14,12 +15,13 @@ function App() {
      <Navbar/>
      <SmokeEffectBanner/>
      <GalleryEffect/>
-     {/* <RocketShapeSection/> */}
-     <SplitScroll/>
+     <PickProduct/>
+     <RocketShapeSection/>
      <LandingHero/>
+     <SplitScroll/>
      <HowItWorks/>
      <FindProduct/>
-     {/* <Footer/> */}
+     <Footer/>
      <SignupForm/>
     </div>
   );
