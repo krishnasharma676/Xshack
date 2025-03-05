@@ -1,153 +1,125 @@
-import { useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 
+// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-const images = [
-  "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c0f_Group%252036%2520(1)-p-500.png",
-  "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c0f_Group%252036%2520(1)-p-500.png",
-];
-
 export default function HowItWorks() {
-  const borderRef = useRef(null);
-  const sectionRef = useRef(null);
-  const textRef = useRef(null);
-  const carouselRef = useRef(null);
-  const [currentImage, setCurrentImage] = useState(images[0]);
+    const borderRef = useRef(null);
+    const containerRef = useRef(null);
+    const rightSectionRef = useRef(null);
+    const [activeImage, setActiveImage] = useState(0);
 
-  useGSAP(() => {
-    gsap.fromTo(
-      textRef.current,
-      { opacity: 0, x: -50 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: textRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-  }, []);
+    const images = [
+        "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c0f_Group%252036%2520(1)-p-500.png",
+        "https://www.pngmart.com/files/15/Apple-iPhone-11-PNG-Background-Image.png",
+        "https://www.pngmart.com/files/15/Apple-iPhone-11-PNG-Background-Image.png",
+        "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/670503dbd608d95ff656c9b5_66f4dc4dbf8de9c34310ccbf_bag-green-brown-marijuana-is-filled-with-green-brown.avif",
+        "https://www.pngmart.com/files/15/Apple-iPhone-11-PNG-Background-Image.png",
+    ];
 
-  useGSAP(() => {
-    gsap.fromTo(
-      borderRef.current,
-      { strokeDasharray: "565, 565", strokeDashoffset: 565 },
-      {
-        strokeDashoffset: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "bottom bottom",
-          end: "bottom top",
-          scrub: 1,
-          pin: true,
-          onUpdate: (self) => {
-            const progress = self.progress;
-            if (progress > 0.2 && progress <= 0.4) {
-              setCurrentImage(images[0]);
-            } else if (progress > 0.4 && progress <= 0.6) {
-              setCurrentImage(images[1]);
-            } else if (progress > 0.6 && progress <= 0.8) {
-              setCurrentImage(images[0]);
-            } else if (progress > 0.8) {
-              setCurrentImage(images[1]);
-            }
-          },
-        },
-      }
-    );
-  }, []);
+    const totalImages = images.length;
 
-  useGSAP(() => {
-    gsap.to(carouselRef.current, {
-      x: "-50%",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "center center",
-        end: "+=400",
-        scrub: 1,
-      },
-    });
-  }, []);
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+            // Circle animation with ScrollTrigger
+            gsap.fromTo(
+                borderRef.current,
+                { strokeDashoffset: 1570 },
+                {
+                    strokeDashoffset: 0,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: containerRef.current,
+                        start: "top top",
+                        end: `+=${containerRef.current.offsetHeight}px`, // Dynamically calculate scroll trigger end
+                        scrub: 1,
+                        pin: true,
+                        onUpdate: (self) => {
+                            const progress = self.progress * (totalImages - 1);
+                            const index = Math.min(Math.round(progress), totalImages - 1);
+                            setActiveImage(index);
 
-  return (
-    <div
-      ref={sectionRef}
-      className="relative flex flex-col md:flex-row items-center justify-between h-screen bg-white overflow-hidden p-10"
-    >
-      {/* Left: Animated Heading */}
-      <div ref={textRef} className="text-black text-left md:w-1/3 opacity-0">
-        <h2 className="text-6xl font-bold transition-all duration-700">
-          How It Works
-        </h2>
-        <p className="text-lg mt-4 text-gray-600">
-          Follow these steps to understand the process better.
-        </p>
-      </div>
+                            // Synchronize horizontal scroll for images with active index
+                            gsap.to(rightSectionRef.current, {
+                                x: `-${index * 100}%`, // Shift the images horizontally
+                                duration: 0.5,
+                                ease: "power2.out",
+                            });
+                        },
+                    },
+                }
+            );
+        }, containerRef); // Bind GSAP to containerRef for cleanup
 
-      {/* Center: Animated Circular Image with Borders */}
-      <div className="relative flex items-center justify-center w-[400px] h-[400px] md:w-[500px] md:h-[500px]">
-        <svg width="100%" height="100%" viewBox="0 0 220 220" className="absolute">
-          {/* Grey Background Circle */}
-          <circle
-            cx="110"
-            cy="110"
-            r="90"  // Ensure this matches the green circle's radius
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth="4"
-            transform="rotate(-90 110 110)" // Rotate for perfect alignment
-          />
-          {/* Animated Circular Line */}
-          <circle
-            ref={borderRef}
-            cx="110"
-            cy="110"
-            r="90" // This must match the grey circle
-            fill="none"
-            stroke="#22c55e"
-            strokeWidth="4"
-            strokeDasharray="565, 565"
-            strokeLinecap="round"
-            transform="rotate(-90 110 110)" // Ensures it starts from the top
-          />
-        </svg>
-        {/* Center Image */}
-        <img
-          src={currentImage}
-          alt="Phone"
-          className="relative w-48 md:w-64 z-10 transition-all duration-500"
-        />
-      </div>
+        return () => ctx.revert(); // Cleanup function for GSAP
+    }, [totalImages]);
 
-      {/* Right: GSAP Animated Steps */}
-      <div className="relative w-full md:w-1/3 overflow-hidden">
-        <div ref={carouselRef} className="flex space-x-6">
-          <div className="p-6 bg-green-100 rounded-lg shadow-lg w-60 transition-transform duration-500">
-            <h3 className="font-bold text-lg">Step 1</h3>
-            <p className="text-gray-700">Discover our platform and its features.</p>
-          </div>
-          <div className="p-6 bg-blue-100 rounded-lg shadow-lg w-60 transition-transform duration-500">
-            <h3 className="font-bold text-lg">Step 2</h3>
-            <p className="text-gray-700">Connect with the right people and tools.</p>
-          </div>
-          <div className="p-6 bg-yellow-100 rounded-lg shadow-lg w-60 transition-transform duration-500">
-            <h3 className="font-bold text-lg">Step 3</h3>
-            <p className="text-gray-700">Use the platform effectively for success.</p>
-          </div>
-          <div className="p-6 bg-red-100 rounded-lg shadow-lg w-60 transition-transform duration-500">
-            <h3 className="font-bold text-lg">Step 4</h3>
-            <p className="text-gray-700">Engage and grow your network.</p>
-          </div>
+    return (
+        <div
+            ref={containerRef}
+            className="flex flex-col lg:flex-row items-center justify-between min-h-screen bg-white px-10 relative"
+        >
+            {/* Left Section - Heading */}
+            <div className="relative w-full lg:w-1/3 flex flex-col justify-center items-start">
+                <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900">
+                    HOW IT <span className="text-green-500">WORKS</span>
+                </h2>
+                <p className="mt-4 text-lg text-gray-600">Discover the process step by step.</p>
+            </div>
+
+            {/* Middle Section - Circular Progress with Image */}
+            <div className="flex items-center justify-center w-full lg:w-1/3 z-10 ">
+                <svg width="100%" height="100%" viewBox="0 0 600 600" className="absolute">
+                    <circle
+                        cx="300"
+                        cy="300"
+                        r="250"
+                        fill="none"
+                        stroke="#e5e7eb"
+                        strokeWidth="2"
+                        transform="rotate(-90 300 300)"
+                    />
+                    <circle
+                        ref={borderRef}
+                        cx="300"
+                        cy="300"
+                        r="250"
+                        fill="none"
+                        stroke="#22c55e"
+                        strokeWidth="2"
+                        strokeDasharray="1570, 1570"
+                        strokeDashoffset="1570"
+                        strokeLinecap="round"
+                        transform="rotate(-90 300 300)"
+                    />
+                </svg>
+                <img
+                    src={images[activeImage]}
+                    alt={`Step ${activeImage + 1}`}
+                    className="absolute w-36 md:w-48 lg:w-56 xl:w-64 transition-opacity duration-500"
+                />
+            </div>
+
+            {/* Right Section - Horizontal Scroll */}
+            <div className="w-full lg:w-1/3 flex items-center relative mx-auto overflow-hidden">
+                <div
+                    ref={rightSectionRef}
+                    className="flex space-x-4 transition-transform duration-500 ease-out"
+                >
+                    {images.map((src, index) => (
+                        <img
+                            key={index}
+                            src={src}
+                            alt={`Step ${index + 1}`}
+                            className={`w-64 h-64 object-cover rounded-lg shadow-md transition-all duration-500 ${
+                                index === activeImage ? "opacity-100 scale-110" : "opacity-50 scale-90"
+                            }`}
+                        />
+                    ))}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

@@ -10,19 +10,19 @@ export default function LandingHero() {
 
   useEffect(() => {
     gsap.fromTo(
-        imageRef.current,
-        { scale: 1.6 }, // Start slightly zoomed in
-        {
-          scale: 1, // Zooms out smoothly
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: imageRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        }
-      );      
+      imageRef.current,
+      { scale: 1.6 }, // Start slightly zoomed in
+      {
+        scale: 1, // Zooms out smoothly
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      }
+    );
 
     gsap.fromTo(
       textRef.current,
@@ -52,12 +52,15 @@ export default function LandingHero() {
       />
 
       {/* Overlay Content */}
-      <div className="relative z-10 text-center text-white px-6">
-        <h1 ref={textRef} className="text-5xl font-bold">
+      <div className="relative z-10 text-center text-white px-4 md:px-6">
+        <h1
+          ref={textRef}
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight"
+        >
           WITH XSHACK, YOU NEVER HAVE TO WORRY ABOUT HAVING A BAD TRIP.
         </h1>
 
-        <button className="bg-[#f3f0ed] text-black px-6 py-2 rounded-lg hover:bg-gray-400 transition-all duration-300 mt-6">
+        <button className="bg-[#f3f0ed] text-black text-sm md:text-base px-4 md:px-6 py-2 rounded-lg hover:bg-gray-400 transition-all duration-300 mt-6">
           DOWNLOAD NOW
         </button>
       </div>
