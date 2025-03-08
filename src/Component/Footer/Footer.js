@@ -38,13 +38,13 @@ export default function ContactSection() {
     <>
       {/* Decorative SVG Divider */}
       <div className="relative w-full h-[77px]">
-        <svg
+        {/* <svg
           className="absolute top-[-76px] left-0 w-full h-[80px]"
           viewBox="0 0 1440 80"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path fill="black" d="M0,80 L720,0 L1440,80 L1440,80 L0,80 Z" />
-        </svg>
+        </svg> */}
       </div>
 
       {/* Footer Section */}
