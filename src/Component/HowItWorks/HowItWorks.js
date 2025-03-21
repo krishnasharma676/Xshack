@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HowItWorks() {
@@ -23,7 +22,6 @@ export default function HowItWorks() {
 
     useEffect(() => {
         let ctx = gsap.context(() => {
-            // Circle animation with ScrollTrigger
             gsap.fromTo(
                 borderRef.current,
                 { strokeDashoffset: 1570 },
@@ -33,7 +31,7 @@ export default function HowItWorks() {
                     scrollTrigger: {
                         trigger: containerRef.current,
                         start: "top top",
-                        end: `+=${containerRef.current.offsetHeight}px`, // Dynamically calculate scroll trigger end
+                        end: `+=${containerRef.current.offsetHeight}px`,
                         scrub: 1,
                         pin: true,
                         onUpdate: (self) => {
@@ -41,9 +39,8 @@ export default function HowItWorks() {
                             const index = Math.min(Math.round(progress), totalImages - 1);
                             setActiveImage(index);
 
-                            // Synchronize horizontal scroll for images with active index
                             gsap.to(rightSectionRef.current, {
-                                x: `-${index * 100}%`, // Shift the images horizontally
+                                x: `-${index * 100}%`,
                                 duration: 0.5,
                                 ease: "power2.out",
                             });
@@ -51,33 +48,35 @@ export default function HowItWorks() {
                     },
                 }
             );
-        }, containerRef); // Bind GSAP to containerRef for cleanup
+        }, containerRef);
 
-        return () => ctx.revert(); // Cleanup function for GSAP
+        return () => ctx.revert();
     }, [totalImages]);
 
     return (
         <div
             ref={containerRef}
-            className="flex flex-col lg:flex-row items-center justify-between min-h-screen bg-white px-10 relative"
+            className="flex flex-col lg:flex-row items-center justify-between min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 sm:px-10 py-16 relative overflow-hidden"
         >
             {/* Left Section - Heading */}
-            <div className="relative w-full lg:w-1/3 flex flex-col justify-center items-start">
-                <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900">
-                    HOW IT <span className="text-green-500">WORKS</span>
+            <div className="w-full lg:w-1/3 text-center lg:text-left mb-12 lg:mb-0 z-10">
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+                    HOW IT <span className="text-green-400">WORKS</span>
                 </h2>
-                <p className="mt-4 text-lg text-gray-600">Discover the process step by step.</p>
+                <p className="mt-4 text-gray-400 text-base sm:text-lg">
+                    Discover the process, step by step, in an immersive and visual experience.
+                </p>
             </div>
 
-            {/* Middle Section - Circular Progress with Image */}
-            <div className="flex items-center justify-center w-full lg:w-1/3 z-10 ">
+            {/* Middle Section - Circular Progress */}
+            <div className="relative w-full lg:w-1/3 flex items-center justify-center h-[300px] sm:h-[350px] md:h-[400px]">
                 <svg width="100%" height="100%" viewBox="0 0 600 600" className="absolute">
                     <circle
                         cx="300"
                         cy="300"
                         r="250"
                         fill="none"
-                        stroke="#e5e7eb"
+                        stroke="#333"
                         strokeWidth="2"
                         transform="rotate(-90 300 300)"
                     />
@@ -88,7 +87,7 @@ export default function HowItWorks() {
                         r="250"
                         fill="none"
                         stroke="#22c55e"
-                        strokeWidth="2"
+                        strokeWidth="3"
                         strokeDasharray="1570, 1570"
                         strokeDashoffset="1570"
                         strokeLinecap="round"
@@ -98,23 +97,25 @@ export default function HowItWorks() {
                 <img
                     src={images[activeImage]}
                     alt={`Step ${activeImage + 1}`}
-                    className="absolute w-36 md:w-48 lg:w-56 xl:w-64 transition-opacity duration-500"
+                    className="absolute w-28 sm:w-36 md:w-44 lg:w-52 transition-opacity duration-500"
                 />
             </div>
 
-            {/* Right Section - Horizontal Scroll */}
-            <div className="w-full lg:w-1/3 flex items-center relative mx-auto overflow-hidden">
+            {/* Right Section - Image Carousel */}
+            <div className="w-full lg:w-1/3 flex items-center justify-center overflow-hidden">
                 <div
                     ref={rightSectionRef}
-                    className="flex space-x-4 transition-transform duration-500 ease-out"
+                    className="flex space-x-6 transition-transform duration-500 ease-out"
                 >
-                    {images.map((src, index) => (
+                    {images.slice(1).map((src, index) => (
                         <img
                             key={index}
                             src={src}
                             alt={`Step ${index + 1}`}
-                            className={`w-64 h-64 object-cover rounded-lg shadow-md transition-all duration-500 ${
-                                index === activeImage ? "opacity-100 scale-110" : "opacity-50 scale-90"
+                            className={`w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 object-cover rounded-xl transition-all duration-500 ${
+                                index === activeImage
+                                    ? "opacity-100 scale-110"
+                                    : "opacity-40 scale-90"
                             }`}
                         />
                     ))}

@@ -1,36 +1,23 @@
 import { useEffect, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { setupScrollAnimations } from "./scrollAnimations";
+import clsx from "clsx";
 
 export default function FindProduct() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    gsap.from(".floating-item", {
-      y: 50,
-      opacity: 0,
-      stagger: 0.3,
-      scrollTrigger: {
-        trigger: ".floating-container",
-        start: "top 80%",
-        end: "bottom 20%",
-        scrub: true,
-      },
-    });
+    setupScrollAnimations();
   }, []);
 
   const images = [
     {
       src: "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c02_1695152527-hh-dream-queen%201.webp",
       name: "Luci",
-      description:
-        "Luci brings a burst of energy, keeping you refreshed and motivated throughout the day.",
+      description: "Luci brings a burst of energy, keeping you refreshed and motivated throughout the day.",
       mood: [
-        { label: "Happy", rating: 4, color: "text-orange-400" },
-        { label: "Relaxed", rating: 2, color: "text-red-400" },
-        { label: "Euphoric", rating: 3, color: "text-yellow-400" },
+        { label: "Happy", rating: 4, color: "bg-orange-400" },
+        { label: "Relaxed", rating: 2, color: "bg-red-400" },
+        { label: "Euphoric", rating: 3, color: "bg-yellow-400" },
       ],
     },
     {
@@ -38,9 +25,9 @@ export default function FindProduct() {
       name: "Chamomile",
       description: "Chamomile soothes your senses, perfect for a calm and peaceful evening.",
       mood: [
-        { label: "Happy", rating: 3, color: "text-orange-400" },
-        { label: "Relaxed", rating: 5, color: "text-red-400" },
-        { label: "Euphoric", rating: 2, color: "text-yellow-400" },
+        { label: "Happy", rating: 3, color: "bg-orange-400" },
+        { label: "Relaxed", rating: 5, color: "bg-red-400" },
+        { label: "Euphoric", rating: 2, color: "bg-yellow-400" },
       ],
     },
     {
@@ -48,9 +35,9 @@ export default function FindProduct() {
       name: "Rize",
       description: "Rize uplifts your mood, ideal for creative bursts and productivity.",
       mood: [
-        { label: "Happy", rating: 5, color: "text-orange-400" },
-        { label: "Relaxed", rating: 3, color: "text-red-400" },
-        { label: "Euphoric", rating: 4, color: "text-yellow-400" },
+        { label: "Happy", rating: 5, color: "bg-orange-400" },
+        { label: "Relaxed", rating: 3, color: "bg-red-400" },
+        { label: "Euphoric", rating: 4, color: "bg-yellow-400" },
       ],
     },
     {
@@ -58,20 +45,24 @@ export default function FindProduct() {
       name: "Octane Mint",
       description: "Octane Mint sharpens focus and provides mental clarity for peak performance.",
       mood: [
-        { label: "Happy", rating: 2, color: "text-orange-400" },
-        { label: "Relaxed", rating: 4, color: "text-red-400" },
-        { label: "Euphoric", rating: 5, color: "text-yellow-400" },
+        { label: "Happy", rating: 2, color: "bg-orange-400" },
+        { label: "Relaxed", rating: 4, color: "bg-red-400" },
+        { label: "Euphoric", rating: 5, color: "bg-yellow-400" },
       ],
     },
   ];
 
+  const active = images[activeIndex];
+
   return (
-    <div className="relative w-full h-screen flex flex-col md:flex-row">
-      {/* Left Section */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-[#EDECE8] text-black p-6 md:p-10">
-        <h3 className="text-lg md:text-xl font-bold text-center mb-4">UNLOCKING PLEASURE</h3>
-        <h1 className="text-2xl md:text-5xl font-bold text-center">FIND A PRODUCT & FIND YOURSELF</h1>
-        <div className="w-24 h-24 md:w-48 md:h-48 rounded-full overflow-hidden mt-6 md:mt-10">
+    <section className="w-full min-h-screen grid md:grid-cols-2 grid-cols-1 bg-black text-white">
+      {/* Left Panel */}
+      <div className="flex flex-col justify-center items-center bg-[#EDECE8] text-black px-8 py-16">
+        <h3 className="text-xl font-semibold mb-2">UNLOCKING PLEASURE</h3>
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">
+          FIND A PRODUCT & FIND YOURSELF
+        </h1>
+        <div className="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-xl">
           <video autoPlay loop muted playsInline className="w-full h-full object-cover">
             <source
               src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2be8_floating-transcode.mp4"
@@ -85,46 +76,43 @@ export default function FindProduct() {
         </div>
       </div>
 
-      {/* Right Section */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-[#141B18] text-white p-6 md:p-10">
-        <h1 className="text-2xl md:text-4xl font-bold text-center">
-          {images[activeIndex].name} - Mini Joints
-        </h1>
-        <p className="text-green-400 text-sm md:text-lg mt-1">THC 22.6%</p>
+      {/* Right Panel */}
+      <div className="bg-[#141B18] px-6 py-12 flex flex-col items-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">{active.name} - Mini Joints</h2>
+        <p className="text-green-400 text-sm mb-6">THC 22.6%</p>
 
-        {/* Image Stack */}
-        <div className="relative w-full flex flex-col items-center mt-6 md:mt-8 mt-[30px]">
-          <div className="flex items-end space-x-[-15px] sm:space-x-[-20px] md:space-x-[-30px]">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-white flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-110 hover:z-10 cursor-pointer"
-                onMouseEnter={() => setActiveIndex(index)}
-              >
-                <img src={image.src} alt={image.name} className="rounded-full w-3/4" />
-                <span className="absolute bottom-[-15px] text-xs sm:text-sm">{image.name}</span>
+        <p className="text-gray-300 text-center max-w-md mb-8">{active.description}</p>
+
+        <div className="flex justify-center gap-6 mb-10">
+          {active.mood.map((mood, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className="w-24 h-2 rounded-full bg-gray-700 overflow-hidden mb-1">
+                <div className={`${mood.color} h-full`} style={{ width: `${mood.rating * 20}%` }}></div>
               </div>
-            ))}
-          </div>
+              <span className="text-xs text-gray-400">{mood.label}</span>
+            </div>
+          ))}
+        </div>
 
-          {/* Description */}
-          <p className="text-xs sm:text-sm md:text-base text-gray-400 text-center mt-6 transition-opacity duration-300 px-4 mt-[30px]">
-            {images[activeIndex].description}
-          </p>
-
-          {/* Mood Indicators */}
-          <div className="flex gap-4 mt-[30px]">
-            {images[activeIndex].mood.map((moodItem, i) => (
-              <div key={i} className="text-center">
-                <p className={`${moodItem.color} text-sm md:text-base`}>
-                  {"★ ".repeat(moodItem.rating)}
-                </p>
-                <p className="text-xs">{moodItem.label}</p>
-              </div>
-            ))}
-          </div>
+        {/* Image Selector */}
+        <div className="flex overflow-x-auto gap-6 py-4 scrollbar-hide">
+          {images.map((img, index) => (
+            <div
+              key={index}
+              onMouseEnter={() => setActiveIndex(index)}
+              className={clsx(
+                "w-20 h-20 md:w-24 md:h-24 rounded-full border-2 flex-shrink-0 cursor-pointer overflow-hidden transition-all duration-300",
+                {
+                  "border-green-400 scale-110 shadow-lg": index === activeIndex,
+                  "border-gray-700": index !== activeIndex,
+                }
+              )}
+            >
+              <img src={img.src} alt={img.name} className="w-full h-full object-cover" />
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
