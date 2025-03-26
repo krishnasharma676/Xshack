@@ -56,7 +56,8 @@ export default function HowItWorks() {
     return (
         <div
             ref={containerRef}
-            className="flex flex-col lg:flex-row items-center justify-between min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 sm:px-10 py-16 relative overflow-hidden"
+            className="flex flex-col lg:flex-row items-center justify-between min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#121212] to-[#0a0a0a] text-white px-6 sm:px-10 py-16 relative overflow-hidden"
+
         >
             {/* Left Section - Heading */}
             <div className="w-full lg:w-1/3 text-center lg:text-left mb-12 lg:mb-0 z-10">

@@ -10,16 +10,6 @@ const RocketShapeSection = () => {
 
   return (
     <div className="relative w-full">
-      {/* Rocket Tip Section */}
-      {/* <div className="relative w-full bg-white h-[77px]">
-        <svg
-          className="absolute top-0 left-0 w-full h-[80px]"
-          viewBox="0 0 1440 80"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path fill="black" d="M0,80 L720,0 L1440,80 L1440,80 L0,80 Z" />
-        </svg>
-      </div> */}
 
       <div className="relative z-10 flex flex-col items-center justify-center text-center text-white">
         <h1 className="text-1xl md:text-4xl lg:text-5xl font-extrabold text-orange-500 mt-2">SHOP YOUR WAY.</h1>
