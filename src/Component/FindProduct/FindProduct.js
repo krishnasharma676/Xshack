@@ -12,7 +12,7 @@ export default function FindProduct() {
     {
       src: "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c02_1695152527-hh-dream-queen%201.webp",
       name: "Luci",
-      description: "Luci brings a burst of energy, keeping you refreshed and motivated throughout the day.",
+      description: "Luci brings a burst of energy, keeping you refreshed throughout the day.",
       mood: [
         { label: "Happy", rating: 4, color: "text-orange-400" },
         { label: "Relaxed", rating: 2, color: "text-red-400" },
@@ -42,7 +42,7 @@ export default function FindProduct() {
     {
       src: "https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2c0a_429501781_f520ef82-c2b7-4c4b-9862-6e6191b0f412-73b543e9-dd01-4b9a-9c9b-51ba3570b58e%201.webp",
       name: "Octane Mint",
-      description: "Octane Mint sharpens focus and provides mental clarity for peak performance.",
+      description: "Octane Mint focus and provides mental clarity for peak performance.",
       mood: [
         { label: "Happy", rating: 2, color: "text-orange-400" },
         { label: "Relaxed", rating: 4, color: "text-red-400" },
@@ -52,13 +52,13 @@ export default function FindProduct() {
   ];
 
   return (
-    <div className="relative w-full h-screen flex flex-col md:flex-row">
+    <div className="relative w-full h-screen flex flex-col md:flex-row bg-gradient-to-r from-[#f7f7f7] to-[#e3e6f3]">
       {/* Left Section */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-[#EDECE8] text-black p-6 md:p-10">
-        <h3 className="text-lg md:text-xl font-bold text-center mb-4">UNLOCKING PLEASURE</h3>
-        <h1 className="text-2xl md:text-5xl font-bold text-center">FIND A PRODUCT & FIND YOURSELF</h1>
-        <div className="w-24 h-24 md:w-48 md:h-48 rounded-full overflow-hidden mt-6 md:mt-10">
-          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-gradient-to-br from-[#0f1412] to-[#1e2b26] text-white p-8">
+        <h3 className="text-lg md:text-xl font-bold text-center mb-4 text-[#d3d3d3]">UNLOCKING PLEASURE</h3>
+        <h1 className="text-2xl md:text-4xl font-extrabold text-center mb-8 text-white">FIND A PRODUCT & FIND YOURSELF</h1>
+        <div className="w-24 h-24 md:w-48 md:h-48 rounded-full overflow-hidden mt-6 md:mt-10 shadow-xl">
+          <video autoPlay loop muted playsInline className="w-full h-full object-cover transition-transform transform hover:scale-105 duration-500">
             <source
               src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/65dc57b17286ce9d8bea2be8_floating-transcode.mp4"
               type="video/mp4"
@@ -71,28 +71,32 @@ export default function FindProduct() {
         </div>
       </div>
 
-      {/* Right Section - Refactored */}
-      <div className="w-full md:w-1/2 bg-gradient-to-tr from-[#0f1412] to-[#1e2b26] text-white px-6 py-10 flex flex-col justify-center relative overflow-hidden">
+      {/* Right Section */}
+      <div className="w-full md:w-1/2 bg-[#0f1412] text-white px-6 py-10 flex flex-col justify-center relative overflow-hidden">
         <div className="mb-6 text-center z-10">
-          <h1 className="text-3xl md:text-4xl font-bold">{images[activeIndex].name} - Mini Joints</h1>
-          <p className="text-green-400 text-sm md:text-lg mt-1">THC 22.6%</p>
+          <h1 className="text-3xl md:text-4xl font-bold transition-all duration-500">{images[activeIndex].name} - Mini Joints</h1>
+          <p className="text-green-400 text-lg mt-1 transition-all duration-500">THC 22.6%</p>
         </div>
 
-        {/* Image Carousel Styled */}
-        <div className="flex justify-center items-center gap-6 md:gap-10 overflow-hidden z-10">
+        {/* Image Carousel */}
+        <div className="flex justify-center items-center gap-6 md:gap-10 mb-6 z-10">
           {images.map((image, index) => {
             const isActive = index === activeIndex;
             return (
               <div
                 key={index}
-                className={`relative w-20 h-20 md:w-24 md:h-24 rounded-full transition-all duration-500 cursor-pointer ${
-                  isActive ? "scale-125 ring-2 ring-green-400 shadow-xl shadow-green-300/20" : "opacity-50 hover:opacity-100"
+                className={`relative w-24 h-24 rounded-full cursor-pointer transform transition-all duration-500 hover:scale-110 ${
+                  isActive ? "scale-125 ring-4 ring-green-400 shadow-lg shadow-green-300/20" : "opacity-70 hover:opacity-100"
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
               >
-                <img src={image.src} alt={image.name} className="rounded-full w-full h-full object-cover" />
+                <img
+                  src={image.src}
+                  alt={image.name}
+                  className="rounded-full w-full h-full object-cover transition-transform duration-300"
+                />
                 {isActive && (
-                  <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-medium text-green-300">
+                  <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-medium text-green-300">
                     {image.name}
                   </span>
                 )}
@@ -102,16 +106,14 @@ export default function FindProduct() {
         </div>
 
         {/* Description */}
-        <p className="text-sm md:text-base text-gray-300 text-center mt-8 px-4 leading-relaxed z-10">
-          {images[activeIndex].description}
-        </p>
+        <p className="text-lg text-gray-300 text-center mt-6 leading-relaxed z-10 px-4 transition-all duration-500">{images[activeIndex].description}</p>
 
         {/* Mood Ratings */}
-        <div className="flex justify-center gap-6 mt-6 z-10">
+        <div className="flex justify-center gap-8 mt-6 z-10">
           {images[activeIndex].mood.map((moodItem, i) => (
             <div key={i} className="text-center">
-              <p className={`${moodItem.color} text-lg font-bold`}>{"★".repeat(moodItem.rating)}</p>
-              <p className="text-xs text-gray-400 mt-1">{moodItem.label}</p>
+              <p className={`${moodItem.color} text-lg font-bold transition-all duration-500`}>{"★".repeat(moodItem.rating)}</p>
+              <p className="text-sm text-gray-400 mt-1">{moodItem.label}</p>
             </div>
           ))}
         </div>

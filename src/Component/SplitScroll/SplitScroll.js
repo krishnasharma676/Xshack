@@ -17,7 +17,6 @@ const SplitScroll = () => {
   return (
     <section className="relative w-full">
       <div className="flex flex-wrap md:flex-nowrap">
-        {/* Left Side with Darker Gradient Background */}
         <div className="w-full md:w-1/2 h-screen flex flex-col justify-center items-center px-6 md:px-10 sticky top-0 bg-[#000]">
           {/* Split Heading into Words */}
           <h1
@@ -31,7 +30,6 @@ const SplitScroll = () => {
             ))}
           </h1>
 
-          {/* Bigger AI Eyes Below Heading */}
           <div className="flex gap-8 md:gap-12 mt-6 md:mt-8">
             {[0, 1].map((_, index) => (
               <div key={index} className="eye w-24 md:w-36 h-24 md:h-36 bg-white rounded-full flex justify-center items-center relative shadow-lg">

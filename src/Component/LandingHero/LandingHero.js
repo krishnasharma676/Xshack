@@ -11,9 +11,9 @@ export default function LandingHero() {
   useEffect(() => {
     gsap.fromTo(
       imageRef.current,
-      { scale: 1.6 }, // Start slightly zoomed in
+      { scale: 1.6 },
       {
-        scale: 1, // Zooms out smoothly
+        scale: 1,
         ease: "power2.out",
         scrollTrigger: {
           trigger: imageRef.current,
@@ -43,7 +43,6 @@ export default function LandingHero() {
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image (Covers Entire Div) */}
       <img
         ref={imageRef}
         src="https://cdn.prod.website-files.com/65dc57b17286ce9d8bea2bb3/66f4283cf41a303dcfc38306_14.avif"
@@ -51,7 +50,6 @@ export default function LandingHero() {
         className="absolute top-0 left-0 w-full h-full object-cover"
       />
 
-      {/* Overlay Content */}
       <div className="relative z-10 text-center text-white px-4 md:px-6">
         <h1
           ref={textRef}
